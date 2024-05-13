@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import "../styles/Login.scss";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../redux/state";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +25,8 @@ const LoginPage = () => {
 
       /* Get data after fetching */
       const loggedIn = await response.json();
+
+      dispatch(setLogin(loggedIn));
 
       navigate("/");
       toast.success("Login Successfuly");

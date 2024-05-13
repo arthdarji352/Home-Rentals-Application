@@ -47,13 +47,18 @@ const RegisterPage = () => {
         body: register_form,
       });
 
-      if (response.ok) {
+      const resJson = await response.json();
+      // console.log(response);
+
+      if (!response.ok) {
+        toast.error(resJson.message);
+        return;
+      } else {
         navigate("/login");
         toast.success("Register successfully");
       }
     } catch (err) {
       console.log("Registration failed", err.message);
-      toast.error("Registration failed");
     }
   };
 
@@ -114,14 +119,14 @@ const RegisterPage = () => {
             required
           />
           <label htmlFor="image">
-            <img src="/assets/addImage.png" alt="add profile photo" />
+            <img src="/assets/addImage.png" alt="add profile pic" />
             <p>Upload Your Photo</p>
           </label>
 
           {formData.profileImage && (
             <img
               src={URL.createObjectURL(formData.profileImage)}
-              alt="profile photo"
+              alt="profile pic"
               style={{ maxWidth: "80px" }}
             />
           )}
